@@ -1,0 +1,16 @@
+
+
+{% extends 'number_registry/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>New Reservations</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+
+{% endif %}
+<div class='unreg'>You need to be registered if you want to reserve a new number.</div>
+{% endblock %}

@@ -25,7 +25,7 @@ SECRET_KEY = 'kus6snj51nzgdx4g5@d3svf@ysnr3a^_r81ceayyklz=q*n%c6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.159', '76.14.32.33','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.159', '76.14.32.33','127.0.0.1','localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'number_registry',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'dictionary.urls'
@@ -63,10 +65,23 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # <-- For Social Login
+                'social_django.context_processors.login_redirect', # <-- For Social Login
             ],
         },
     },
 ]
+
+#For Social Login:
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = '686692548334936'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '07c6e67f734dc893b798bf99966a6f93'  # App Secret
 
 WSGI_APPLICATION = 'dictionary.wsgi.application'
 
@@ -115,7 +130,9 @@ USE_L10N = True
 USE_TZ = True
 
 
-
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'index'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

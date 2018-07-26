@@ -1,0 +1,24 @@
+{% extends 'number_registry/base.html' %}
+{% block content %}
+
+<div class="content container">
+<table>
+   <tr align=middle>
+        <th>Name</th>
+        <th width=15%>Number of zeros</th>
+        <th>Comment</th>
+    </tr>
+   {% for entry in entries %}
+   <tr>
+       <th>{{ entry.name }}</th>
+       <th>{{ entry.number }}</th>
+       <i><th>{{ entry.comment }}</th></i>
+
+   </tr> 
+{% endfor %}
+
+</tr>
+
+</table>
+</div>
+{% endblock %}

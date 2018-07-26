@@ -4,11 +4,15 @@ from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 
 from .models import Entry
-from .forms import Reserve
+from .forms import Reserve, SignUpForm
 
-
+#def index(request):
+#	return render(request, 'number_registry/index.html')
 
 def entry_list(request):
 	entries = Entry.objects.order_by('number')
@@ -27,20 +31,26 @@ def reserve_new(request):
 
 	return render(request, 'number_registry/reserve_number.html', {'form': form})
 
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('/')
+    else:
+        form = SignUpForm()
+    return render(request, 'number_registry/signup.html', {'form': form})
 
-""" 
-This was my old one, based on the Mozilla tutorial
-def reserve(request):
-	new_reservation = reserve(initial={'name':name})
-	# If this is a POST request then process the Form data
-	if request.method == 'POST':
-		# Create a form instance and populate it with data from the request (binding):
-	 	form = ReserveNewNumber(request.POST)
-	 	
-	 	# Check if the form is valid:
-	 	if form.is_valid():
-	 		new_reservation = form.clean_number()
-	 		new_reservation = form.clean_name()
+def logout_view(request):
+	logout(request)
+	return redirect('/')
 
-	return render(request, 'number_registry/reserve_number.html', {'form':form, 'new_reservation':new_reservation})
-	"""
+
+@login_required
+def home(request):
+    return render(request, 'number_registry/home.html')
+

@@ -1,0 +1,48 @@
+{% extends 'number_registry/base.html' %}
+
+{% block content %}
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '686692548334936',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v3.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form>
+--OR
+
+  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+
+{% endblock %}
