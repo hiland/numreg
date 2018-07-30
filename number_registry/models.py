@@ -14,6 +14,7 @@ def validate_div3(value):
             params={'value': value},
         )
 #Checks the database to see if there is an existing record with the same name
+#BUG:  Cannot update existing entries in the admin page.  
 def validateUniqueName(value):
 	lookup = Entry.objects.filter(name=value).exists()
 	if lookup == True:
@@ -22,6 +23,7 @@ def validateUniqueName(value):
 			params={'value': value},
 			)
 #Checks the database to see if the number has been registered.
+#BUG:  Cannot update existing entries in the admin page.
 def validateUniqueNumber(value):
 	lookup = Entry.objects.filter(number=value).exists()
 	if lookup == True:
@@ -47,8 +49,9 @@ class Entry(models.Model):
         self.save()
 
 #Model for user's carts
+#TODO:  Replace the CASCADE statement (Or just disable users via a flag?)
 class Cart(models.Model):
-	buyer = models.ForeignKey('auth.User',on_delete=models.CASCADE)
+	buyer = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 	desiredname = models.CharField(max_length=100, validators=[validateUniqueName])
 	desirednumber = models.BigIntegerField(validators=[validate_div3, validateUniqueNumber])
 	desiredcomment = models.TextField(blank=True)
@@ -59,3 +62,6 @@ class Cart(models.Model):
 	def publish(self):
 		self.published_date = timezone.now()
 		self.save()
+	
+	def __str__(self): # __str__ for Python 3, __unicode__ for Python 2
+		return self.name

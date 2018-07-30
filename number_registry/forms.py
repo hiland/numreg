@@ -1,5 +1,5 @@
 from django import forms
-from .models import Entry
+from .models import Entry, Cart
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -14,6 +14,11 @@ class Reserve(forms.ModelForm):
 	class Meta:
 		model = Entry
 		fields = ('name', 'number', 'comment', 'dedication',)
+
+class ReserveCart(forms.ModelForm):	
+	class Meta:
+		model = Cart
+		fields = ('desiredname', 'desirednumber', 'desiredcomment', 'desireddedication',)
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include
 from django.conf.urls import url
+from django.urls import path
 from django.contrib import admin
 from number_registry import views
 from number_registry import views as core_views
@@ -23,15 +24,12 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    #url(r'', views.index, name='index'),
-    url(r'', include('number_registry.urls')),
-    url(r'^reserve$', views.reserve_new,  name='reserve_new'),
+    path('', views.index, name='index'),
+    #url(r'', include('number_registry.urls')),
+    #url(r'^reserve_cart$', views.reserve_cart,  name='reserve_cart'),
+    #url(r'^review_cart/$', views.review_cart,  name='review_cart'),
+    #url(r'^reserve$', views.reserve_new,  name='reserve_new'),
     url(r'^signup/$', core_views.signup, name='signup'),
-    url(r'^login/$', auth_views.login, name='login'),
+    #url(r'^login/$', auth_views.login, name='login'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # <-- For Social
-
-
-
-
-    #url(r'^ordered/',  include('number_registry.urls')),
     ]

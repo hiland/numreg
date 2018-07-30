@@ -1,0 +1,25 @@
+{% extends 'number_registry/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<table>
+	<tr>
+		<th>Number</th>
+		<th>Name</th>
+		<th>Comment</th>
+		<th>Dedication</th>
+	</tr>
+{% for cart in cartContents %}
+	<tr>
+		<th>{{ cart.desiredname }}</th>
+		<th>{{ cart.desirednumber }}</th>
+		<th>{{ cart.desiredcomment }}</th>
+		<th>{{ cart.desireddedication }}</th>
+	</tr>
+{% endfor %}
+</table>
+
+{% else %}
+You are not logged in!
+{% endif %}
+{% endblock %}

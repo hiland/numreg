@@ -8,16 +8,20 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
-from .models import Entry
-from .forms import Reserve, SignUpForm
+from .models import Entry, Cart
+from .forms import Reserve, SignUpForm, ReserveCart
 
-#def index(request):
-#	return render(request, 'number_registry/index.html')
+# This is the homepage
+def index(request):
+	return render(request, 'number_registry/index.html')
 
+# Lists all known entries.  (for now)
 def entry_list(request):
 	entries = Entry.objects.order_by('number')
 	return render(request, 'number_registry/entry_list.html', {'entries':entries})
 
+# Creates a new reservation.  NOTE:  This needs to write to the cart and not the registry!
+#Will need to be depricated!
 def reserve_new(request):
 	if request.method == "POST":
 		form = Reserve(request.POST)
@@ -31,6 +35,28 @@ def reserve_new(request):
 
 	return render(request, 'number_registry/reserve_number.html', {'form': form})
 
+#Adding reservations to the cart
+def reserve_cart(request):
+	if request.method == "POST":
+		form = ReserveCart(request.POST)
+		if form.is_valid():
+			post = form.save(commit=False)
+			post.buyer = request.user
+			post.save()
+			return redirect('review_cart')
+	else:
+		form = ReserveCart()
+
+	return render(request, 'number_registry/reserve_cart.html', {'form': form})
+
+# Shows cart items to user
+@login_required
+def review_cart(request):
+		cartContents = Cart.objects.filter(buyer_id=request.user)
+		return render(request, 'number_registry/review_cart.html', {'cartContents':cartContents})
+
+
+# New User creation page.  Facebook login works!
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -53,4 +79,6 @@ def logout_view(request):
 @login_required
 def home(request):
     return render(request, 'number_registry/home.html')
+
+
 
