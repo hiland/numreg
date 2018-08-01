@@ -1,0 +1,39 @@
+h1 a {
+    color: #ffffff;
+    font-family: 'Lobster';
+}
+body {
+    padding-left: 15px;
+}
+table {
+	padding-left: 15px;
+	padding-right: 15px;
+	table-layout: auto;
+	border: 3px solid #FCA205;
+}
+tr {
+  	border: 1px solid #FCA205;
+}
+th {
+
+	border: 1px solid #FCA205;	
+}
+.page-header {
+    background-color: #ff9400;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+}
+h2 {
+	color: #000000;
+	font-family: 'Helvetica';
+}
+div unreg{
+	border-style: color #F63427, padding: 3px;
+	font-synthesis: bold;
+}
