@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kus6snj51nzgdx4g5@d3svf@ysnr3a^_r81ceayyklz=q*n%c6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 #ALLOWED_HOSTS = ['192.168.1.159', '76.14.32.33','127.0.0.1','localhost']
 ALLOWED_HOSTS = ['*']
@@ -174,5 +174,10 @@ LOGIN_REDIRECT_URL = 'index'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://storage.googleapis.com/numreg-209816/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    'dictionary/static',
+]
+
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')

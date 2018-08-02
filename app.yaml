@@ -1,8 +1,8 @@
 # [START runtime]
 runtime: python
 env: flex
-#entrypoint: gunicorn -b :$PORT dictionary.wsgi
-entrypoint: gunicorn -c gunicorn.conf.py -b :$PORT
+entrypoint: gunicorn -b :$PORT dictionary.wsgi
+#entrypoint: gunicorn -c gunicorn.conf.py -b :$PORT
 
 beta_settings:
     cloud_sql_instances: numreg-209816:us-west2:devnumreg
